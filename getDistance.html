@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample</title>
+<script>
+
+//これはクラスと考えていいコンストラクタ関数
+//…あらかじめ決められたオブジェクトを生成するためのテンプレート
+function Point(x, y) {
+	this.className = 'point';
+	this.x = x;
+	this.y = y;
+}
+//クラス（テンプレート）のプロトタイプにメソッドを定める
+Point.prototype.getDistanceFrom = function(x, y){
+	var _x = this.x - x;
+	var _y = this.y - y;
+	var square = Math.pow(_x, 2) + Math.pow(_y, 2);
+	return Math.sqrt(square);
+}
+
+//1,1を引数にとるオブジェクトをコンストラクタから生成し、変数に格納
+var myPoint = new Point(1, 1);
+//原点＝mypointで定めた(1,1)との距離を、getDistanceFromプロトタイプメソッド（引数適当）から定める
+console.log(myPoint.getDistanceFrom(2,2));
+var obj = {x:1, y:Math.sqrt(3)};
+
+
+//いちいち測りたい点A,Bを定めるとめんどくさい
+var genten = new Point(0, 0);
+var sample = genten.getDistanceFrom(obj.x, obj.y);
+console.log(sample);
+
+
+//メソッドを借りる(call,applyで借りられる：引数（「誰のメソッドとして」, 引数1,引数2）)
+// var distance = Point.prototype.getDistanceFrom.call(obj, 0, 0);
+var distance = Point.prototype.getDistanceFrom.apply(obj, [0, 0]);
+console.log(distance);
+</script>
+</head>
+<body>
+</body>
+</html>
